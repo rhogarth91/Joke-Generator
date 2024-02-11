@@ -42,6 +42,10 @@
         let prompt =
           "Please tell me a joke. Can this joke include only animals";
         let apiUrl = `https://api.shecodes.io/ai/v1/generate?prompt=${prompt}&context=${context}&key=${apiKey}`;
+
+        let waitingMessage = document.querySelector("#joke");
+        waitingMessage.innerHTML = "Please wait.... generating a joke for you";
+
         axios.get(apiUrl).then(showJoke);
       }
 
