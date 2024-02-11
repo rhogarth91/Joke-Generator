@@ -4,13 +4,13 @@
     <title>Joke Generator</title>
     <meta charset="UTF-8" />
     <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <link href="src/styles.css" rel="stylesheet" type="text/css" />
   </head>
 
   <body>
     <h1>Joke Generator</h1>
-    <button>Tell me joke</button>
+    <button id="joke-button">Tell me joke</button>
     <div id="joke"></div>
 
     <footer>
@@ -25,6 +25,28 @@
         >
       </p>
     </footer>
-    <script></script>
+    <script>
+      function showJoke(response) {
+        new Typewriter("#joke", {
+          strings: response.data.answer,
+          autoStart: true,
+          cursor: "",
+          delay: 50,
+        });
+      }
+
+      function getJoke(event) {
+        event.preventDefault();
+        let apiKey = "74a685e33bd3f486faa1o3tac33e021d";
+        let context = "Please be polite and provide a short answer.";
+        let prompt =
+          "Please tell me a joke. Can this joke include only animals";
+        let apiUrl = `https://api.shecodes.io/ai/v1/generate?prompt=${prompt}&context=${context}&key=${apiKey}`;
+        axios.get(apiUrl).then(showJoke);
+      }
+
+      let jokeButton = document.querySelector("#joke-button");
+      jokeButton.addEventListener("click", getJoke);
+    </script>
   </body>
 </html>
